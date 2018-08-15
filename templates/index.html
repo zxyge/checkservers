@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>KS Helper</title>
+    <style type="text/css">
+    body {
+        background: #ffffff;
+        margin: auto;
+        color: #6c6c6c;
+        font-family: "microsoft yahei", simhei;
+        font-size: 12px;
+        width: 1000px;
+    }
+
+    ul,
+    ol,
+    li,
+    dl,
+    dd,
+    dt,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    form,
+    input {
+        margin: 0;
+        padding: 0;
+    }
+
+    img,
+    fieldset {
+        border: none;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    select,
+    input,
+    img {
+        vertical-align: middle;
+    }
+
+    select,
+    input,
+    textarea {
+        font-size: 12px;
+    }
+
+    a {
+        color: #010101;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #4c7d08;
+        text-decoration: underline;
+    }
+
+    div,
+    ul,
+    dl {
+        zoom: 1;
+    }
+
+    div:after,
+    ul:after,
+    dl:after {
+        content: "";
+        display: block;
+        clear: both;
+        height: 0;
+        visibility: hidden;
+    }
+
+    #foot {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        border-top: 1px solid #ddd;
+        width: 100%;
+    }
+
+    #foot div{ display:block; float:left ;padding:10px 20px;}
+
+
+    /* 其他 */
+    #all{
+        padding:12px;overflow:auto;
+    }
+    .item {
+        position:relative;
+        height: 20px;
+        padding: 8px;
+        font-size: 11px;
+        margin-bottom: 0px;
+        border-bottom: #ececec 1px solid;
+        /*#9ed8ec*/
+        cursor: default;
+    }
+
+    .item span {
+        width: 75px;
+        display: block;
+        float: left;
+    }
+
+
+    .item span{ width:100px; }
+    .item span.w1 {
+        width: 60px;
+    }
+
+    .item span.w2{
+        width: 150px;
+        color:#333;
+    }
+    .item span.w3{
+        width: 120px;
+    }
+
+    .item span .uptime{ padding-left:8px; font-size: 9px; }
+    .item span .status{ width:42px; }
+    .item span.op{
+        position:absolute;right:0;
+        text-align:right;width:150px !important;
+    }
+    .item span.op a{ padding: 5px;}
+    .item.head{
+        border-bottom: #9ed8ec 2px solid;
+    }
+
+    .availabe {
+        background: #d1f1c2;
+    }
+
+    audio{
+        opacity: 0;width:1;height:1px;position: absolute;z-index:0;
+    }
+    </style>
+</head>
+
+<body>
+    <audio preload loop id="clock">
+        <source src="https://raw.githubusercontent.com/catonisland/kimsufi.helper/master/music/1.ogg" type="audio/ogg">
+        <source src="https://raw.githubusercontent.com/catonisland/kimsufi.helper/master/music/1.mp3" type="audio/mpeg">
+    </audio>
+    <div id="all">
+        <div class="head item">
+            <span>类型(Model)</span>
+            <span class="w3">状态(Status)</span>
+            <span class="w3">CPU</span>
+            <!--
+            <span class="w3">核心(Cores/Threads)</span>
+            <span>主频(Freq.)</span>
+            -->
+            <span>内存(RAM)</span>
+            <span>磁盘(Disk)</span>
+            <span>网络(Network)</span>
+            <span class="w3">价格(Price/month)</span>
+        </div>
+        {% for data in models %}
+        <div class="item" id="{{data.id}}">
+            <span>{{data.title}}</span>
+            <span class="w3 status">{{ data.status}}</span>
+            <span class="uptime"></span>
+            </span>
+            <span class="w3">{{data.cpu}}</span><span>{{data.ram}}</span><span>{{data.disk}}</span><span>{{data.network}}</span><span class="w3">{{data.price}}</span>
+
+            {% if data.status == "有货" %}
+                        <a href="{{ data.odrlink }}{{data.id }}" target="_blank">下单</a>
+            {% endif %}
+        </div>
+
+        {% endfor %}
+    </div>
+
+    <script type="text/javascript" src='/static/js/jquery-1.9.1.min.js'></script>
+    <script type="text/javascript">
+       $(document).ready(function(){
+           console.log(1);
+            $('.item').each(function(){
+                var text = $(this).find('.status').html();
+                console.log(text);
+                if(text == '有货'){
+                    $(this).css('backgroundColor','#76EEC6');
+                    $('#clock')[0].play();
+                }
+            });
+
+            setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+            window.location.reload();//页面刷新
+            },5000);
+
+       })
+
+
+
+    </script>
+
+
+</body>
+</html>
