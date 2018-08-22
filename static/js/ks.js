@@ -39,7 +39,7 @@
         //本地接口
         'local': function(id, type, callback) {
 
-            var baseurl="http://ks.saled.cn"
+            var baseurl="http://ks.saled.cn(填写你自己的服务器地址)"
             var url = baseurl+"/check_servers/"
             var postdata={"id":id,"type":type}
             console.log(postdata)
