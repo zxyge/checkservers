@@ -16,19 +16,20 @@ def check_servers(request):
     if (request.method == 'POST'):
         postBody = request.body
         json_result = json.loads(postBody)
-        id = json_result.get('id')
-        type = json_result.get('type')
-        print(json_result)
-        if type=='ks':
-            odrlink='https://www.kimsufi.com/en/order/kimsufi.xml?reference='
-        else:
-            odrlink='https://www.soyoustart.com/ie/order/soYouStart.xml?reference='
+        link=json_result.get('link')+json_result.get('id')
         s = requests.session()
-        page = s.get('https://checkservers.ovh/')
-        pagesoup = BeautifulSoup(page.text, 'html.parser')
-        links = pagesoup.find("a", href=odrlink+id)
+        # id = json_result.get('id')
+        type = json_result.get('type')
+        if type=="ks" or type=="sys":
+            page = s.get("https://checkservers.ovh")
+            pagesoup = BeautifulSoup(page.text, 'html.parser')
+            links = pagesoup.find("a", href=link)
+        elif type=="ol":
+            page = s.get(link.lower())
+            pagesoup = BeautifulSoup(page.text, 'html.parser')
+            links = pagesoup.find("span", itemtype="http://schema.org/InStock")
         if links != None:
-            server_status={"status": "true"}
+            server_status = {"status": "true"}
         return HttpResponse(json.dumps(server_status), content_type="application/json")
 
 def index(request):

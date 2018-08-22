@@ -33,15 +33,21 @@
 	{ "id": "1804armada01", "title": "ARM-2T(加拿大)", "cpu": "ARM Cortex A9 ARMv7", "ram": "2GB", "disk": "1x2TB ", "network": "250 Mbps", "price": "$ 5.99", "type": "sys" ,"link":"https://www.soyoustart.com/ie/order/soYouStart.xml?reference="},
     { "id": "1804armada02", "title": "ARM-4T(加拿大)", "cpu": "ARM Cortex A9 ARMv7", "ram": "2GB", "disk": "1x4TB ", "network": "250 Mbps", "price": "$ 5.99", "type": "sys" ,"link":"https://www.soyoustart.com/ie/order/soYouStart.xml?reference="},
 	{ "id": "1804armada03", "title": "ARM-6T(加拿大)", "cpu": "ARM Cortex A9 ARMv7", "ram": "2GB", "disk": "1x2TB ", "network": "250 Mbps", "price": "$ 5.99", "type": "sys" ,"link":"https://www.soyoustart.com/ie/order/soYouStart.xml?reference="},
+
+     { "id": "start-2-xs-sata", "title": "online_5o_HDD", "cpu": "Intel C2350", "ram": "4GB", "disk": "500GB ", "network": "1G Mbps", "price": "$ 4.99", "type": "ol" ,"link":"https://www.online.net/fr/serveurs-dedies/"},
+    { "id": "start-2-s-ssd", "title": "online_12o_SSD", "cpu": "Intel C2350", "ram": "4GB", "disk": "120GB SSD", "network": "1G Mbps", "price": "$ 11.99", "type": "ol" ,"link":"https://www.online.net/fr/serveurs-dedies/"},
+    { "id": "start-2-s-sata", "title": "online_12o_HDD", "cpu": "Intel C2350", "ram": "4GB", "disk": "1x1TB ", "network": "1G Mbps", "price": "$ 11.99", "type": "ol" ,"link":"https://www.online.net/fr/serveurs-dedies/"},
+
+
     ];
 
     var filters = {
         //本地接口
-        'local': function(id, type, callback) {
-
-            var baseurl="http://ks.saled.cn(填写你自己的服务器地址)"
+        'local': function(id, type, link, callback) {
+            // console.log(link);
+            var baseurl="http://127.0.0.1:8001"
             var url = baseurl+"/check_servers/"
-            var postdata={"id":id,"type":type}
+            var postdata={"id":id,"type":type,"link":link}
             console.log(postdata)
             $.ajax({
                 type: "POST",
@@ -107,6 +113,7 @@
                         "start_time": new Date().getTime(),
                         "last_time": new Date().getTime(),
                         "type": hit.type,
+                        "link":hit.link,
                         "timer": null
                     }
 
@@ -152,11 +159,11 @@
         }, 1000);
     }
 
-    kimsufi.prototype.check = function(id , type) {
+    kimsufi.prototype.check = function(id , type,link) {
         var local = this;
 
         if (this.filter) {
-            this.filter(id , type, function(status) {
+            this.filter(id , type, link, function(status) {
                 local.setStatus(id, status);
             })
         }
@@ -180,10 +187,11 @@
         if (model) {
             var last_status = model.status;
             var type = model.type;
+            var link = model.link;
             model.status = status;
             model.last_time = new Date().getTime();
             model.timer = setTimeout(function() {
-                local.check(id , type);
+                local.check(id , type,link);
             }, this.tick);
             this.fire('update', this.getStatus());
 
