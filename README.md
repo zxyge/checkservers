@@ -1,10 +1,10 @@
-## 安装环境
+## 使用环境
 
 >+ centos7
 >+ python3.6.5
 
 
-### 特点
+### 安装说明
 ~~~
 1.    安装python3.6 和pip，参考 Centos7 yum安装Python3.6环境(http://blog.51cto.com/wenguonideshou/2083301)
 2.    下载项目
