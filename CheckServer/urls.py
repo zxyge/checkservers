@@ -19,5 +19,11 @@ from ckse import views
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
-    url(r'^index/', views.index),
+    url(r'^$', views.index),
+    # url(r'^getModels/', views.getModels),
+    url(r'^check_servers/', views.check_servers),
+    # url(r'^setList/', views.setList),
+
+
+
 ]
