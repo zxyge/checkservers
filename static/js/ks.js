@@ -45,7 +45,7 @@
         //本地接口
         'local': function(id, type, link, callback) {
             // console.log(link);
-            var baseurl="http://127.0.0.1:8001"
+            var baseurl="http://ks.saled.cn(替换为你的连接)"
             var url = baseurl+"/check_servers/"
             var postdata={"id":id,"type":type,"link":link}
             console.log(postdata)
