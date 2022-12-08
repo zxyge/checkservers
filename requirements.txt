@@ -1,5 +1,5 @@
 beautifulsoup4==4.6.3
-certifi==2018.8.13
+certifi==2022.12.7
 chardet==3.0.4
 Django==2.1
 django-cors-headers==2.4.0
